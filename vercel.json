@@ -1,0 +1,8 @@
+{
+  "buildCommand": "npm install && npm run build",
+  "outputDirectory": ".",
+  "installCommand": "npm install",
+  "env": {
+    "OPENAI_API_KEY": "@OPENAI_API_KEY"
+  }
+}
