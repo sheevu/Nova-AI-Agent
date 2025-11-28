@@ -19,6 +19,8 @@ Nova-AI-Agent is an advanced AI-powered sales and support agent built by **Sudar
 - **Telemetry**: Real-time journey tracking and analytics
 - **Impact Calculator**: ROI metrics and performance analytics
 - **Secure**: Environment-based configuration with .env support
+- **Interactive UI**: Neon service carousel plus animated pricing slider tuned for mobile and auto-rotating insights
+- **Voice-ready Copy**: Greeting and fallback responses avoid repetition while guiding users to share business details
 
 ## 🏗️ Project Structure
 
@@ -64,6 +66,9 @@ Create a `.env` file in the project root:
 ```env
 OPENAI_API_KEY=your_openai_api_key_here
 PORT=3001
+# Optional: override models
+OPENAI_MODEL=gpt-4.1-mini
+OPENAI_TTS_MODEL=gpt-4.1-mini-tts
 ```
 
 ### Running Locally
@@ -79,6 +84,14 @@ npm run dev
 ```
 
 Access the application at `http://localhost:4173`
+
+### Testing
+
+```bash
+npm run build
+```
+
+This static prototype uses the build command above to verify that dependencies install and assets bundle successfully.
 
 ## 📦 Deployment
 
@@ -119,11 +132,24 @@ Content-Type: application/json
 }
 ```
 
+### Voice Endpoint (ChatGPT 4.1 mini TTS)
+```
+POST /api/voice
+Content-Type: application/json
+
+{
+  "text": "What should I play as audio?",
+  "voice": "alloy" // optional
+}
+```
+
+**Response**: `{ "success": true, "audio": "<base64-mp3>" }`
+
 ## 📊 Technologies Used
 
 - **Frontend**: HTML5, CSS3, JavaScript (ES6+)
 - **Backend**: Node.js, Express.js
-- **AI**: OpenAI GPT-4 API
+- **AI**: OpenAI GPT-4.1 mini (chat + voice TTS)
 - **Deployment**: Vercel (Serverless)
 - **Rate Limiting**: express-rate-limit
 - **CORS**: cors middleware

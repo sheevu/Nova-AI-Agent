@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#020409" />
   <title>Sudarshan Nova Agent</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -14,12 +15,12 @@
           <img src="assets/logo.svg" alt="Sudarshan logo" class="nova-logo" />
           <div>
             <p class="nova-label">SUDARSHAN NOVA AGENT</p>
-            <p class="nova-subtitle">Futuristic, bilingual sales companion — mobile-first (70%) with desktop hues.</p>
+            <p class="nova-subtitle">Futuristic, bilingual sales companion — ChatGPT 4.1 mini voice + text with mobile-first polish.</p>
           </div>
         </div>
         <div class="status-pill">
           <span class="status-dot"></span>
-          <span>Realtime</span>
+          <span>Realtime · 4.1 mini</span>
         </div>
       </header>
       <div class="top-offers">
@@ -33,7 +34,7 @@
           <div class="chat-content">
             <div class="chat-history" id="messageList" aria-live="polite">
               <article class="bot-bubble">
-                <p>नमस्ते! 👋 अमित से जुड़कर स्वागत है। बताइये—कौन सा व्यापार आप ऑनलाइन ले जाना चाहते हैं?</p>
+                <p>नमस्ते! 👋 मैं आपकी Sudarshan AI Assistant हूँ। हम आपके छोटे व्यापार को online grow करने में मदद करते हैं। आपका बिज़नेस क्या है, आपका नाम और लोकेशन क्या है?</p>
                 <span>12:34</span>
               </article>
             </div>
@@ -65,71 +66,52 @@
 
         <section class="feature-pane" aria-label="Agent capabilities">
           <div class="feature-header">
-            <p>Icon-led features</p>
-            <small>GPT-4.1 mini + audio, Hindi/English trained.</small>
+            <p>Services in motion</p>
+            <small>Neon-gradient cards for every service—interactive, animated, and sized for any screen.</small>
           </div>
-          <div class="feature-detail" id="featureDetail">
-            <p class="detail-title">Select a capability</p>
-            <p class="detail-body">Hover or tap a card to see how it powers voice/text journeys.</p>
+
+          <div class="service-cta">
+            <div>
+              <p class="cta-label">Talk to our Team</p>
+              <p class="cta-body">Fill the short form and हमारी टीम आपसे connect होकर सही प्लान बताएगी।</p>
+            </div>
+            <a class="cta-button" href="https://forms.gle/NEf67bFV3diA5pe86" target="_blank" rel="noopener noreferrer">Talk to our Team</a>
           </div>
-          <div class="feature-list">
-            <article class="feature-card">
-              <span class="feature-icon">🛰️</span>
-              <div>
-                <p class="feature-title">Telemetry Pulse</p>
-                <p class="feature-body">Realtime journey map with neon cues showing friction hotspots.</p>
-              </div>
-            </article>
-            <article class="feature-card">
-              <span class="feature-icon">🗣️</span>
-              <div>
-                <p class="feature-title">Bilingual Voice + Text</p>
-                <p class="feature-body">Hindi conversation with English fallback, tone-aware replies.</p>
-              </div>
-            </article>
-            <article class="feature-card">
-              <span class="feature-icon">⚡</span>
-              <div>
-                <p class="feature-title">Insight Nudges</p>
-                <p class="feature-body">Contextual prompts surface next best action and ROI metrics.</p>
-              </div>
-            </article>
-            <article class="feature-card">
-              <span class="feature-icon">📊</span>
-              <div>
-                <p class="feature-title">Impact Calculator</p>
-                <p class="feature-body">Instant savings vs agency and payback timelines in glowing chips.</p>
-              </div>
-            </article>
-            <article class="feature-card">
-              <span class="feature-icon">🔐</span>
-              <div>
-                <p class="feature-title">Secure Lead Capture</p>
-                <p class="feature-body">Encrypted CRM-ready data handoff triggered after qualifier questions.</p>
-              </div>
-            </article>
-            <article class="feature-card">
-              <span class="feature-icon">🌐</span>
-              <div>
-                <p class="feature-title">Multi-Channel Embed</p>
-                <p class="feature-body">Mobile widget first with desktop lightbox when needed.</p>
-              </div>
-            </article>
+
+          <div class="service-carousel" aria-live="polite">
+            <div class="service-track" id="serviceTrack" role="list"></div>
           </div>
-          <div class="latest-features">
-            <h3>Latest capabilities</h3>
-            <div class="latest-grid">
-              <article>
-                <h4>ChatGPT Sentiment Guard</h4>
-                <p>GPT responds with emotion-aware guidance so the agent avoids tone-deaf replies.</p>
+
+          <div class="pricing-preview">
+            <div class="style-header">
+              <h3>Pricing in motion</h3>
+              <small>Slide through live plans—animated, swipeable, and auto-rotating every 5 seconds.</small>
+            </div>
+            <div class="pricing-carousel" aria-live="polite">
+              <div class="pricing-track" id="pricingTrack" role="list"></div>
+            </div>
+          </div>
+
+          <div class="style-preview">
+            <div class="style-header">
+              <h3>Preview in 3 styles</h3>
+              <small>Pick the vibe that fits your brand; all three stay mobile-ready.</small>
+            </div>
+            <div class="style-grid">
+              <article class="style-card style-card--neon">
+                <p class="style-tag">Neon Beam</p>
+                <h4>Electric gradients</h4>
+                <p>High-contrast glow, ideal for spotlighting flash offers and CTA buttons.</p>
               </article>
-              <article>
-                <h4>Live Insight Overlays</h4>
-                <p>Each reply surfaces live KPIs, payback, and CTA suggestions mid-conversation.</p>
+              <article class="style-card style-card--midnight">
+                <p class="style-tag">Midnight Glass</p>
+                <h4>Frosted clarity</h4>
+                <p>Glassmorphic panel with soft borders that keep long-form copy readable.</p>
               </article>
-              <article>
-                <h4>Female Voice Ready</h4>
-                <p>Switch to the female speech synthesis voice for calmer confirmations and guided steps.</p>
+              <article class="style-card style-card--aurora">
+                <p class="style-tag">Aurora Drift</p>
+                <h4>Fluid motion</h4>
+                <p>Wave animation and pastel gradients for conversational, friendly intents.</p>
               </article>
             </div>
           </div>
