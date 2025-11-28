@@ -7,7 +7,8 @@ const listenBtn = document.getElementById('listenBtn');
 const featureCards = document.querySelectorAll('.feature-card');
 const featureDetail = document.getElementById('featureDetail');
 
-const responses = [
+const API_BASE = '/api';
+const fallbackResponses = [
   'हमारा सिस्टम आपके डेटा से सीख कर बेहतर सुझाव देगा।',
   'आपके किराना स्टोर को 24/7 आवाज़ से संभाला जा रहा है।',
   'हमारी ROI रिपोर्ट दिखा रही है कि ₹199 हर महीने में 68× रिटर्न है।',
@@ -29,6 +30,22 @@ const appendMessage = (text, isUser = false) => {
   article.className = isUser ? 'user-bubble' : 'bot-bubble';
   article.innerHTML = `<p>${text}</p><span class="timestamp">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>`;
   messageList.appendChild(article);
+  messageList.scrollTop = messageList.scrollHeight;
+  return article;
+};
+
+const setTyping = (isTyping) => {
+  let typingBubble = document.querySelector('.typing-bubble');
+  if (isTyping) {
+    if (!typingBubble) {
+      typingBubble = document.createElement('article');
+      typingBubble.className = 'bot-bubble typing-bubble';
+      typingBubble.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+      messageList.appendChild(typingBubble);
+    }
+  } else if (typingBubble) {
+    typingBubble.remove();
+  }
   messageList.scrollTop = messageList.scrollHeight;
 };
 
@@ -58,6 +75,8 @@ const synth = window.speechSynthesis;
 let recognition;
 let recognitionAvailable = false;
 let isListening = false;
+let activeAudio;
+let isSending = false;
 
 const setVoiceButtonState = (state) => {
   if (!voiceToggle) return;
@@ -68,9 +87,20 @@ const setVoiceButtonState = (state) => {
   }
 };
 
+const setListenButtonState = (state) => {
+  if (!listenBtn) return;
+  listenBtn.dataset.state = state;
+  const label = listenBtn.querySelector('span:last-child');
+  if (label) {
+    const map = { idle: 'Listen', loading: 'Loading…', playing: 'Playing…' };
+    label.textContent = map[state] || 'Listen';
+  }
+};
+
 if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   recognition = new SpeechRecognition();
+  recognitionAvailable = true;
   recognition.lang = 'hi-IN';
   recognition.interimResults = false;
   recognition.maxAlternatives = 1;
@@ -96,33 +126,107 @@ if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
 }
 
 const speak = (text) => {
-  if (!synth) return;
+  if (!synth) return false;
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = 'hi-IN';
   utterance.rate = 1;
   synth.speak(utterance);
+  return true;
+};
+
+const decodeBase64ToAudio = (base64) => {
+  const byteString = atob(base64);
+  const ab = new ArrayBuffer(byteString.length);
+  const ia = new Uint8Array(ab);
+  for (let i = 0; i < byteString.length; i += 1) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+  return new Blob([ia], { type: 'audio/mpeg' });
+};
+
+const playAudioFromText = async (text) => {
+  if (!text) return;
+  try {
+    setListenButtonState('loading');
+    const response = await fetch(`${API_BASE}/voice`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text })
+    });
+
+    const data = await response.json();
+    if (!data.success || !data.audio) {
+      throw new Error('No audio payload');
+    }
+
+    const audioBlob = decodeBase64ToAudio(data.audio);
+    const audioUrl = URL.createObjectURL(audioBlob);
+    if (activeAudio) {
+      activeAudio.pause();
+    }
+    activeAudio = new Audio(audioUrl);
+    setListenButtonState('playing');
+    activeAudio.play();
+    activeAudio.onended = () => {
+      URL.revokeObjectURL(audioUrl);
+      setListenButtonState('idle');
+    };
+  } catch (error) {
+    console.error('TTS playback failed', error);
+    const fallbackWorked = speak(text);
+    if (!fallbackWorked) {
+      appendMessage('Audio playback is unavailable on this device.', false);
+    }
+    setListenButtonState('idle');
+  }
 };
 
 const listenLatestBot = () => {
-  if (!synth) return;
   const botBubbles = messageList.querySelectorAll('.bot-bubble');
   if (!botBubbles.length) return;
   const latestText = botBubbles[botBubbles.length - 1].querySelector('p')?.textContent;
   if (latestText) {
-    speak(latestText);
+    playAudioFromText(latestText);
   }
 };
 
-const handleSend = (triggeredByVoice = false) => {
+const sendToAssistant = async (message) => {
+  try {
+    const response = await fetch(`${API_BASE}/chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message,
+        context: { surface: 'landing-ui', voiceEnabled: !!recognitionAvailable }
+      })
+    });
+
+    const data = await response.json();
+    if (!data.success || !data.reply) {
+      throw new Error('No reply payload');
+    }
+    return data.reply;
+  } catch (error) {
+    console.error('Chat request failed', error);
+    return fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
+  }
+};
+
+const handleSend = async (triggeredByVoice = false) => {
   const message = chatInput.value.trim();
-  if (!message) return;
+  if (!message || isSending) return;
+
   appendMessage(message, true);
   chatInput.value = '';
-  const reply = responses[Math.floor(Math.random() * responses.length)];
-  setTimeout(() => {
-    appendMessage(reply, false);
-    speak(reply);
-  }, 600);
+  setTyping(true);
+  isSending = true;
+
+  const reply = await sendToAssistant(message, triggeredByVoice);
+  setTyping(false);
+  isSending = false;
+
+  appendMessage(reply, false);
+  playAudioFromText(reply);
 };
 
 sendBtn?.addEventListener('click', () => handleSend());
@@ -156,3 +260,6 @@ voiceToggle?.addEventListener('click', () => {
 listenBtn?.addEventListener('click', () => {
   listenLatestBot();
 });
+
+setVoiceButtonState('voice');
+setListenButtonState('idle');

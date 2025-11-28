@@ -25,11 +25,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 32px;
+  padding: clamp(16px, 3vw, 32px);
+  overflow-x: hidden;
 }
 
 .experience {
-  width: min(1200px, 100%);
+  width: min(1180px, 100%);
   margin: 0 auto;
 }
 
@@ -37,9 +38,10 @@ body {
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 30px;
-  padding: 32px;
+  padding: clamp(20px, 3vw, 32px);
   backdrop-filter: blur(28px);
   box-shadow: 0 30px 80px rgba(5, 4, 20, 0.8), 0 0 60px rgba(89, 141, 255, 0.25);
+  overflow: hidden;
 }
 
 .nova-header {
@@ -48,6 +50,7 @@ body {
   justify-content: space-between;
   gap: 16px;
   margin-bottom: 24px;
+  flex-wrap: wrap;
 }
 
 .top-offers {
@@ -116,7 +119,7 @@ body {
 
 .pane-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 24px;
 }
 
@@ -124,12 +127,13 @@ body {
   background: rgba(10, 12, 24, 0.95);
   border-radius: 26px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 24px;
+  padding: clamp(18px, 2vw, 24px);
   position: relative;
   overflow: hidden;
-  min-height: 560px;
+  min-height: clamp(480px, 68vh, 640px);
   display: flex;
   flex-direction: column;
+  gap: 12px;
 }
 
 .chat-flare {
@@ -146,15 +150,17 @@ body {
   flex: 1;
   position: relative;
   z-index: 1;
+  min-height: 0;
 }
 
 .chat-history {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-height: 360px;
-  min-height: 360px;
+  max-height: clamp(360px, 50vh, 520px);
+  min-height: clamp(260px, 42vh, 420px);
   overflow-y: auto;
+  padding-right: 4px;
 }
 
 .chat-history::-webkit-scrollbar {
@@ -173,6 +179,43 @@ body {
   line-height: 1.5;
   font-size: 14px;
   position: relative;
+}
+
+.typing-bubble {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.typing-bubble .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  animation: pulse 1s infinite ease-in-out;
+}
+
+.typing-bubble .dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typing-bubble .dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.25;
+    transform: translateY(0px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+  100% {
+    opacity: 0.25;
+    transform: translateY(0px);
+  }
 }
 
 .bot-bubble {
@@ -221,8 +264,11 @@ body {
 
 .chat-input {
   margin-top: auto;
-  position: relative;
-  z-index: 1;
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(10, 12, 24, 0.92) 0%, rgba(10, 12, 24, 1) 65%);
+  padding-top: 4px;
 }
 
 .chat-input input {
@@ -235,23 +281,33 @@ body {
   font-size: 14px;
 }
 
+.chat-input input:focus {
+  outline: none;
+  border-color: rgba(126, 217, 87, 0.6);
+  box-shadow: 0 0 0 3px rgba(126, 217, 87, 0.15);
+}
+
 .input-actions {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
   margin-top: 8px;
+  flex-wrap: wrap;
 }
 
 .input-actions button {
   border-radius: 12px;
   border: none;
-  padding: 8px 16px;
+  padding: 10px 16px;
   font-size: 14px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  transition: transform 0.2s ease;
+  gap: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  flex: 1;
+  min-width: 120px;
+  justify-content: center;
 }
 
 .input-actions button:hover {
@@ -263,6 +319,19 @@ body {
   background: rgba(255, 255, 255, 0.06);
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#listenBtn[data-state='loading'],
+#listenBtn[data-state='playing'],
+#voiceToggle[data-state='listening'] {
+  border-color: rgba(126, 217, 87, 0.8);
+  box-shadow: 0 0 0 3px rgba(126, 217, 87, 0.12);
+}
+
+#listenBtn[data-state='loading'] .btn-icon,
+#listenBtn[data-state='playing'] .btn-icon,
+#voiceToggle[data-state='listening'] .btn-icon {
+  filter: drop-shadow(0 0 6px rgba(126, 217, 87, 0.8));
 }
 
 .send-btn {
@@ -279,10 +348,12 @@ body {
   background: rgba(255, 255, 255, 0.03);
   border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 24px;
+  padding: clamp(18px, 2vw, 24px);
   display: flex;
   flex-direction: column;
   gap: 16px;
+  position: relative;
+  overflow: hidden;
 }
 
 .feature-header p {
@@ -320,6 +391,7 @@ body {
 .feature-list {
   display: grid;
   gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
 .feature-card {
@@ -330,19 +402,23 @@ body {
   padding: 12px;
   border: 1px solid rgba(255, 255, 255, 0.06);
   transition: transform 0.2s ease, border 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  align-items: center;
 }
 
 .feature-card:hover,
-.feature-card.active {
+.feature-card.active,
+.feature-card:focus-visible {
   transform: translateY(-3px);
   border-color: rgba(126, 217, 87, 0.9);
   box-shadow: 0 10px 25px rgba(126, 217, 87, 0.15);
+  outline: none;
 }
 
 .feature-icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   display: flex;
   align-items: center;
@@ -402,17 +478,103 @@ body {
   color: rgba(255, 255, 255, 0.7);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   body {
-    padding: 16px;
+    align-items: flex-start;
   }
   .nova-window {
-    padding: 20px;
+    padding: clamp(18px, 3vw, 22px);
   }
   .pane-grid {
     grid-template-columns: 1fr;
   }
+  .nova-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .status-pill {
+    width: 100%;
+    justify-content: center;
+  }
+  .top-offers {
+    grid-template-columns: 1fr;
+  }
+  .chat-pane {
+    min-height: clamp(420px, 70vh, 560px);
+  }
   .chat-history {
-    max-height: 280px;
+    max-height: 400px;
+    min-height: 260px;
+  }
+  .input-actions button {
+    min-width: 0;
+  }
+  .feature-list {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  body {
+    padding: 14px;
+  }
+  .experience {
+    width: 100%;
+  }
+  .nova-window {
+    border-radius: 22px;
+  }
+  .header-brand {
+    align-items: flex-start;
+  }
+  .nova-logo {
+    width: 42px;
+    height: 42px;
+  }
+  .chat-pane {
+    padding: 16px;
+    gap: 10px;
+  }
+  .chat-history {
+    max-height: 340px;
+    min-height: 220px;
+  }
+  .chat-input input {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+  .input-actions {
+    gap: 6px;
+  }
+  .input-actions button {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  .feature-card {
+    align-items: flex-start;
+  }
+  .feature-icon {
+    width: 42px;
+    height: 42px;
+  }
+}
+
+@media (max-width: 420px) {
+  .chat-pane {
+    min-height: 360px;
+  }
+  .chat-history {
+    max-height: 320px;
+    min-height: 200px;
+  }
+  .input-actions {
+    gap: 8px;
+  }
+  .input-actions button {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+  .feature-list {
+    grid-template-columns: 1fr;
   }
 }
