@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sudarshan Nova Agent</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="experience">
+    <div class="nova-window">
+      <header class="nova-header">
+        <div class="header-brand">
+          <img src="assets/logo.svg" alt="Sudarshan logo" class="nova-logo" />
+          <div>
+            <p class="nova-label">SUDARSHAN NOVA AGENT</p>
+            <p class="nova-subtitle">Futuristic, bilingual sales companion — mobile-first (70%) with desktop hues.</p>
+          </div>
+        </div>
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          <span>Realtime</span>
+        </div>
+      </header>
+      <div class="top-offers">
+        <p>Setup your business online @ ₹89</p>
+        <p>Get Udyam registration absolutely FREE</p>
+      </div>
+
+      <div class="pane-grid">
+        <section class="chat-pane">
+          <div class="chat-flare"></div>
+          <div class="chat-content">
+            <div class="chat-history" id="messageList" aria-live="polite">
+              <article class="bot-bubble">
+                <p>नमस्ते! 👋 अमित से जुड़कर स्वागत है। बताइये—कौन सा व्यापार आप ऑनलाइन ले जाना चाहते हैं?</p>
+                <span>12:34</span>
+              </article>
+            </div>
+            <div class="suggestion-grid">
+              <button class="suggestion-btn" data-suggest="Show growth plan">🚀 Growth plan</button>
+              <button class="suggestion-btn" data-suggest="Explain pricing">💰 Pricing</button>
+              <button class="suggestion-btn" data-suggest="Share success story">📘 Success story</button>
+              <button class="suggestion-btn" data-suggest="Request live demo">🧭 Live demo</button>
+            </div>
+          </div>
+          <div class="chat-input" aria-label="Message composer">
+            <input id="chatInput" type="text" placeholder="Ask in Hindi or English…" />
+            <div class="input-actions">
+              <button id="voiceToggle" title="Speak" aria-label="Voice input">
+                <span class="btn-icon">🎙️</span>
+                <span>Voice</span>
+              </button>
+              <button id="listenBtn" title="Play audio" aria-label="Play response">
+                <span class="btn-icon">🎧</span>
+                <span>Listen</span>
+              </button>
+              <button id="sendBtn" class="send-btn" aria-label="Send message">
+                <span class="btn-icon">📤</span>
+                <span>Send</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section class="feature-pane" aria-label="Agent capabilities">
+          <div class="feature-header">
+            <p>Icon-led features</p>
+            <small>GPT-4.1 mini + audio, Hindi/English trained.</small>
+          </div>
+          <div class="feature-detail" id="featureDetail">
+            <p class="detail-title">Select a capability</p>
+            <p class="detail-body">Hover or tap a card to see how it powers voice/text journeys.</p>
+          </div>
+          <div class="feature-list">
+            <article class="feature-card">
+              <span class="feature-icon">🛰️</span>
+              <div>
+                <p class="feature-title">Telemetry Pulse</p>
+                <p class="feature-body">Realtime journey map with neon cues showing friction hotspots.</p>
+              </div>
+            </article>
+            <article class="feature-card">
+              <span class="feature-icon">🗣️</span>
+              <div>
+                <p class="feature-title">Bilingual Voice + Text</p>
+                <p class="feature-body">Hindi conversation with English fallback, tone-aware replies.</p>
+              </div>
+            </article>
+            <article class="feature-card">
+              <span class="feature-icon">⚡</span>
+              <div>
+                <p class="feature-title">Insight Nudges</p>
+                <p class="feature-body">Contextual prompts surface next best action and ROI metrics.</p>
+              </div>
+            </article>
+            <article class="feature-card">
+              <span class="feature-icon">📊</span>
+              <div>
+                <p class="feature-title">Impact Calculator</p>
+                <p class="feature-body">Instant savings vs agency and payback timelines in glowing chips.</p>
+              </div>
+            </article>
+            <article class="feature-card">
+              <span class="feature-icon">🔐</span>
+              <div>
+                <p class="feature-title">Secure Lead Capture</p>
+                <p class="feature-body">Encrypted CRM-ready data handoff triggered after qualifier questions.</p>
+              </div>
+            </article>
+            <article class="feature-card">
+              <span class="feature-icon">🌐</span>
+              <div>
+                <p class="feature-title">Multi-Channel Embed</p>
+                <p class="feature-body">Mobile widget first with desktop lightbox when needed.</p>
+              </div>
+            </article>
+          </div>
+          <div class="latest-features">
+            <h3>Latest capabilities</h3>
+            <div class="latest-grid">
+              <article>
+                <h4>ChatGPT Sentiment Guard</h4>
+                <p>GPT responds with emotion-aware guidance so the agent avoids tone-deaf replies.</p>
+              </article>
+              <article>
+                <h4>Live Insight Overlays</h4>
+                <p>Each reply surfaces live KPIs, payback, and CTA suggestions mid-conversation.</p>
+              </article>
+              <article>
+                <h4>Female Voice Ready</h4>
+                <p>Switch to the female speech synthesis voice for calmer confirmations and guided steps.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

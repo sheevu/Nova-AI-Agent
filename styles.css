@@ -1,0 +1,418 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+:root {
+  color-scheme: dark;
+  --bg: #020409;
+  --panel: rgba(255, 255, 255, 0.04);
+  --panel-strong: rgba(255, 255, 255, 0.08);
+  --glow: #5c6cff;
+  --accent: #7ed957;
+  --accent-alt: #ffb347;
+  --muted: #a8b2c5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  background: radial-gradient(circle at top, rgba(82, 26, 255, 0.45), transparent 45%),
+    radial-gradient(circle at 20% 20%, rgba(22, 255, 255, 0.1), transparent 40%),
+    var(--bg);
+  color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
+
+.experience {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+}
+
+.nova-window {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  padding: 32px;
+  backdrop-filter: blur(28px);
+  box-shadow: 0 30px 80px rgba(5, 4, 20, 0.8), 0 0 60px rgba(89, 141, 255, 0.25);
+}
+
+.nova-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.top-offers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.top-offers p {
+  margin: 0;
+  padding: 10px 16px;
+  border-radius: 16px;
+  background: rgba(126, 217, 87, 0.12);
+  color: #b0ffb0;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid rgba(126, 217, 87, 0.4);
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nova-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nova-label {
+  font-size: 14px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0;
+}
+
+.nova-subtitle {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 999px;
+  font-size: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+}
+
+.pane-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.chat-pane {
+  background: rgba(10, 12, 24, 0.95);
+  border-radius: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  min-height: 560px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-flare {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(126, 217, 87, 0.2), transparent 60%);
+  pointer-events: none;
+}
+
+.chat-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.chat-history {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 360px;
+  min-height: 360px;
+  overflow-y: auto;
+}
+
+.chat-history::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chat-history::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+}
+
+.bot-bubble,
+.user-bubble {
+  padding: 16px;
+  border-radius: 18px;
+  line-height: 1.5;
+  font-size: 14px;
+  position: relative;
+}
+
+.bot-bubble {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  align-self: flex-start;
+}
+
+.user-bubble {
+  background: linear-gradient(135deg, rgba(33, 150, 243, 0.15), rgba(33, 150, 243, 0.4));
+  align-self: flex-end;
+}
+
+.bot-bubble span,
+.user-bubble span {
+  font-size: 10px;
+  color: var(--muted);
+  display: block;
+  margin-top: 6px;
+}
+
+.suggestion-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.suggestion-btn {
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.02);
+  color: #fff;
+  padding: 10px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: border 0.2s ease, transform 0.2s ease;
+}
+
+.suggestion-btn:hover {
+  border-color: rgba(126, 217, 87, 1);
+  transform: translateY(-2px);
+}
+
+.chat-input {
+  margin-top: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.chat-input input {
+  width: 100%;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(4, 6, 14, 0.94);
+  color: #fff;
+  padding: 16px 18px;
+  font-size: 14px;
+}
+
+.input-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.input-actions button {
+  border-radius: 12px;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.2s ease;
+}
+
+.input-actions button:hover {
+  transform: translateY(-1px);
+}
+
+#voiceToggle,
+#listenBtn {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.send-btn {
+  background: linear-gradient(135deg, #7ed957, #4dc6ff);
+  color: #020409;
+  font-weight: 600;
+}
+
+.btn-icon {
+  font-size: 16px;
+}
+
+.feature-pane {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.feature-header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.feature-header small {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.feature-detail {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 16px;
+  min-height: 90px;
+}
+
+.detail-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.detail-body {
+  margin: 6px 0 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+}
+
+.feature-list {
+  display: grid;
+  gap: 14px;
+}
+
+.feature-card {
+  display: flex;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 16px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: transform 0.2s ease, border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-card:hover,
+.feature-card.active {
+  transform: translateY(-3px);
+  border-color: rgba(126, 217, 87, 0.9);
+  box-shadow: 0 10px 25px rgba(126, 217, 87, 0.15);
+}
+
+.feature-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.08);
+}
+
+.feature-title {
+  margin: 0;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.feature-body {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.latest-features {
+  border-radius: 18px;
+  border: 1px solid rgba(126, 217, 87, 0.3);
+  padding: 16px;
+  background: rgba(126, 217, 87, 0.03);
+}
+
+.latest-features h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.latest-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+.latest-grid article {
+  border-radius: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.latest-grid h4 {
+  margin: 0;
+  font-size: 13px;
+}
+
+.latest-grid p {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 16px;
+  }
+  .nova-window {
+    padding: 20px;
+  }
+  .pane-grid {
+    grid-template-columns: 1fr;
+  }
+  .chat-history {
+    max-height: 280px;
+  }
+}
