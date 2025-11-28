@@ -95,16 +95,29 @@ This static prototype uses the build command above to verify that dependencies i
 
 ## 📦 Deployment
 
-### Deploy on Vercel
+You can ship the frontend + voice-enabled API from GitHub to either **Vercel** or **Netlify**.
 
-This project is configured for easy deployment on Vercel:
+### Deploy on Vercel (serverless, all-in-one)
+
+This repo already includes `vercel.json` and the backend API routes, so deployment is turnkey:
 
 1. Fork this repository
 2. Create a Vercel project connected to your fork
-3. Add environment variable `OPENAI_API_KEY` in Vercel Settings
-4. Deploy!
+3. Add environment variable `OPENAI_API_KEY` in Vercel Settings (plus optional `OPENAI_MODEL`, `OPENAI_TTS_MODEL`)
+4. Deploy — both `/api/chat` and `/api/voice` will run as serverless functions
 
 **Live Demo**: https://nova-ai-agent.vercel.app
+
+### Deploy on Netlify (static UI + Netlify Functions)
+
+Netlify can also host the same UI and AI voice backend from GitHub:
+
+1. **Fork & import**: Import your fork into Netlify as a new site, keeping the build command `npm run build` and publish directory `.` (root).
+2. **Environment variables**: Add `OPENAI_API_KEY` (and optional `OPENAI_MODEL`, `OPENAI_TTS_MODEL`) under **Site settings → Environment** so chat + voice stay enabled.
+3. **Serverless API**: Move `backend/server.js` into a Netlify Function (e.g., `netlify/functions/api.js`) using an Express adapter like `serverless-http`, or proxy your own Node host at `/api/*`. The existing `/api/chat` and `/api/voice` routes work unchanged once mounted in that function.
+4. **Local verify**: Run `npm run dev` for the frontend and your Netlify Function with `netlify dev` to confirm voice playback before publishing.
+
+If you prefer to avoid a functions rewrite, you can deploy the static frontend to Netlify and point `/api/chat` + `/api/voice` to any Node host running `backend/server.js` (set the base URL in `app.js`).
 
 ## 🔧 API Endpoints
 
