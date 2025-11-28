@@ -7,7 +7,20 @@ const listenBtn = document.getElementById('listenBtn');
 const serviceTrack = document.getElementById('serviceTrack');
 const pricingTrack = document.getElementById('pricingTrack');
 
-const API_BASE = '/api';
+const resolveApiBase = () => {
+  if (typeof window !== 'undefined') {
+    if (window.API_BASE) return window.API_BASE;
+
+    const isLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+    if (isLocalhost && window.location.port === '4173') {
+      return 'http://localhost:3001/api';
+    }
+  }
+
+  return '/api';
+};
+
+const API_BASE = resolveApiBase();
 const fallbackResponses = [
   'मैं आपकी ज़रूरत समझकर सही पैकेज सुझाऊँगा — पहले अपना बिज़नेस, नाम और लोकेशन बताइए।',
   '₹89 सेटअप और मुफ़्त Udyam रजिस्ट्रेशन के साथ हम आपको ऑनलाइन लॉन्च कर देंगे।',
