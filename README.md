@@ -83,6 +83,14 @@ npm run dev
 
 Access the application at `http://localhost:4173`
 
+### Testing
+
+```bash
+npm run build
+```
+
+This static prototype uses the build command above to verify that dependencies install and assets bundle successfully.
+
 ## 📦 Deployment
 
 ### Deploy on Vercel

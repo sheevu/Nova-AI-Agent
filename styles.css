@@ -26,6 +26,7 @@ body {
   align-items: center;
   justify-content: center;
   padding: clamp(16px, 3vw, 32px);
+  overflow-x: hidden;
 }
 
 .experience {
@@ -555,5 +556,25 @@ body {
   .feature-icon {
     width: 42px;
     height: 42px;
+  }
+}
+
+@media (max-width: 420px) {
+  .chat-pane {
+    min-height: 360px;
+  }
+  .chat-history {
+    max-height: 320px;
+    min-height: 200px;
+  }
+  .input-actions {
+    gap: 8px;
+  }
+  .input-actions button {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+  .feature-list {
+    grid-template-columns: 1fr;
   }
 }
